@@ -50,7 +50,7 @@ std::tuple<bool,std::size_t> BinarySearch(const DType& D, const DType::value_typ
 
 	return { D[P]==Value,P };
 }
-/** /
+/**  /
 std::size_t BinarySearch_Custom(const DType& D, const DType::value_type& Value,std::size_t F,std::size_t L) {
 
 	std::int64_t P = 0;
