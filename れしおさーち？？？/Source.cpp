@@ -50,6 +50,32 @@ std::tuple<bool,std::size_t> BinarySearch(const DType& D, const DType::value_typ
 
 	return { D[P]==Value,P };
 }
+std::tuple<bool,std::size_t> BinarySearchD(const DType& D, const DType::value_type& Value) {
+
+	double P = 0;
+	double F= 0;
+	double L= 1;
+	double Pa = 1 / (double)(D.size());
+	double S = D.size();
+	double OP = -1;
+
+	while (L>=F) {
+
+		if (D[P*S] == Value)break;
+		if (OP == P)break;
+		OP = P;
+		P = (F + L) / 2;
+		if (D[P*S] <= Value) {
+			F = (P+F+(Pa*2))/2;
+		}
+		else {			
+			L = (P+L-(Pa))/2;
+		}
+
+	}
+
+	return { D[P*S]==Value,P*S };
+}
 /**  /
 std::size_t BinarySearch_Custom(const DType& D, const DType::value_type& Value,std::size_t F,std::size_t L) {
 
@@ -176,7 +202,7 @@ int main() {
 	}
 	return 0;
 }
-/**/
+/** /
 int main() {
 
 	std::size_t N = 32;
@@ -186,6 +212,26 @@ int main() {
 	for (std::size_t i = 0; i < D.size(); i++) {
 		DType::value_type V = D[i]*2;
 		auto [b, N] = BinarySearch(D, V);
+		std::cout << N << ',' << D[N] << (b?" == ":" != ")<< V << std::endl;
+	}
+	return 0;
+}
+/**/
+/**/
+int main() {
+
+	std::size_t N = 32;
+
+	auto D = MakeVector(N);
+
+	for (std::size_t i = 0; i < D.size(); i++) {
+		DType::value_type V = D[i];
+		auto [b, N] = BinarySearchD(D, V);
+		std::cout << N << ',' << D[N] << (b?" == ":" != ")<< V << std::endl;
+	}
+	for (std::size_t i = 0; i < D.size(); i++) {
+		DType::value_type V = D[i]*2;
+		auto [b, N] = BinarySearchD(D, V);
 		std::cout << N << ',' << D[N] << (b?" == ":" != ")<< V << std::endl;
 	}
 	return 0;
